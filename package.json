@@ -1,0 +1,14 @@
+{
+  "name": "mindx-ai",
+  "version": "1.0.0",
+  "description": "Ethical AI automation and SaaS deployment platform for nonprofits and developers.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "echo Build successful!",
+    "start": "node src/index.js",
+    "test": "node src/test.js",
+    "watch": "nodemon --watch src -e js,py --exec \"npm run build\""
+  },
+  "author": "Mind-Xai",
+  "license": "MIT"
+}

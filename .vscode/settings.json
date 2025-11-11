@@ -1,0 +1,12 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.mouseWheelZoom": true,
+    "editor.formatOnPaste": true,
+    "editor.aiStats.enabled": true,
+    "editor.allowVariableFontsInAccessibilityMode": true,
+    "editor.autoIndentOnPaste": true,
+    "editor.codeActions.triggerOnFocusChange": true,
+    "editor.definitionLinkOpensInPeek": true,
+    "editor.experimentalGpuAcceleration": "on",
+    "editor.foldingImportsByDefault": true
+}
