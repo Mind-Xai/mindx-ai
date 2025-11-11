@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    container_name: mindx_web
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  hf_service:
+    image: python:3.10-slim
+    container_name: mindx_hf
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: bash -c "pip install -r requirements.txt && python src/hf_service.py"
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
