@@ -1,0 +1,4 @@
+jre1.8/
+*.exe
+*.zip
+.ngrok/
