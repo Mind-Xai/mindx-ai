@@ -1,5 +1,5 @@
 # ---------------------------------------------------------
-# MIND-XAI | MASTER CONTROLLER (v3.0 - WiFi Radar)
+# MIND-XAI | MASTER CONTROLLER (v4.0 - Global Eye)
 # Mission: Worldwide Trust & Ethical Automation
 # Copyright (C) 2025 Mind-Xai Global 
 # ---------------------------------------------------------
@@ -7,9 +7,9 @@
 function Show-Header {
     Clear-Host
     Write-Host "=============================================" -ForegroundColor Cyan
-    Write-Host "    MIND-XAI: GLOBAL OPTIMIZER v3.0        " -ForegroundColor Magenta
+    Write-Host "    MIND-XAI: INTELLIGENCE SYSTEM v4.0     " -ForegroundColor Magenta
     Write-Host "=============================================" -ForegroundColor Cyan
-    Write-Host "   User: $env:USERNAME | Status: ARMED       " -ForegroundColor DarkGray
+    Write-Host "   User: $env:USERNAME | Status: GLOBAL LINK " -ForegroundColor DarkGray
     Write-Host "---------------------------------------------"
 }
 
@@ -36,21 +36,38 @@ function Internet-Boost {
 function WiFi-Radar {
     Write-Host " INITIALIZING WIFI RADAR..." -ForegroundColor Yellow
     Start-Sleep -Seconds 1
-    Write-Host " Scanning nearby frequencies..." -ForegroundColor DarkGray
     $networks = netsh wlan show networks mode=bssid
-    
     if ($networks) {
-        Write-Host "---------------------------------------------"
-        Write-Host " DETECTED NETWORKS (Range Scan)" -ForegroundColor Green
-        Write-Host "---------------------------------------------"
-        $networks | Select-String "SSID" | ForEach-Object {
-            Write-Host " [+] $_" -ForegroundColor Cyan
-        }
-        Write-Host "---------------------------------------------"
+        $networks | Select-String "SSID" | ForEach-Object { Write-Host " [+] $_" -ForegroundColor Cyan }
         Write-Host " Scan Complete." -ForegroundColor Yellow
-    } else {
-        Write-Host " No WiFi Adapter Found or WiFi is Off." -ForegroundColor Red
+    } else { Write-Host " WiFi Adapter Offline." -ForegroundColor Red }
+}
+
+function IP-Tracker {
+    Write-Host " GLOBAL GEO-TRACKER ACTIVATED..." -ForegroundColor Green
+    $targetIP = Read-Host " >> Enter IP Address (Press Enter for MY IP)"
+    
+    try {
+        $url = "http://ip-api.com/json/$targetIP"
+        $info = Invoke-RestMethod -Uri $url
+        
+        if ($info.status -eq "fail") {
+            Write-Host " Tracking Failed: Invalid IP" -ForegroundColor Red
+        } else {
+            Write-Host "---------------------------------------------"
+            Write-Host "  TARGET LOCKED " -ForegroundColor Red
+            Write-Host "---------------------------------------------"
+            Write-Host " [+] IP Address : $($info.query)" -ForegroundColor White
+            Write-Host " [+] Country    : $($info.country) ($($info.countryCode))" -ForegroundColor Yellow
+            Write-Host " [+] City       : $($info.city)" -ForegroundColor Yellow
+            Write-Host " [+] ISP        : $($info.isp)" -ForegroundColor Cyan
+            Write-Host " [+] Timezone   : $($info.timezone)" -ForegroundColor DarkGray
+            Write-Host "---------------------------------------------"
+        }
+    } catch {
+        Write-Host " Connection Error. Check Internet." -ForegroundColor Red
     }
+    Pause
 }
 
 # --- MAIN LOOP ---
@@ -60,6 +77,7 @@ do {
     Write-Host "[2]  Fix Internet & Ping"
     Write-Host "[3]  Auto-Repair Windows"
     Write-Host "[4]  WiFi Radar (Scan Networks)"
+    Write-Host "[5]  IP Geo-Tracker (Locate Target)"
     Write-Host "[Q]  Exit"
     Write-Host "---------------------------------------------"
     
@@ -70,6 +88,7 @@ do {
         '2' { Internet-Boost; Pause }
         '3' { Write-Host " Scanning System Health..." -ForegroundColor Yellow; Start-Sleep -Seconds 2; Write-Host " System Integrity: 100%" -ForegroundColor Green; Pause }
         '4' { WiFi-Radar; Pause }
+        '5' { IP-Tracker }
         'Q' { Write-Host "Mind-Xai Signing Off..." -ForegroundColor Red; break }
         Default { Write-Host " Invalid Command" -ForegroundColor Red; Start-Sleep -Seconds 1 }
     }
