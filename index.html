@@ -12,7 +12,6 @@
         h2 { text-shadow: 0 0 10px #0f0; }
         .btn { background: rgba(0, 255, 0, 0.1); color: #0f0; border: 1px solid #0f0; padding: 15px 20px; text-decoration: none; display: block; margin: 10px auto; font-weight: bold; width: 80%; transition: 0.3s; cursor: pointer; }
         .btn:hover { background: #0f0; color: black; box-shadow: 0 0 20px #0f0; }
-        .scan-box { margin-top: 20px; color: #0ff; font-size: 0.8em; min-height: 100px; text-align: left; padding: 10px; border: 1px dashed #333; display: none; }
     </style>
 </head>
 <body>
@@ -20,19 +19,17 @@
     
     <div class="content">
         <img src="logo.jpg" class="logo" alt="Mind-Xai">
-        <h2 style="margin:0; text-shadow: 0 0 10px #0f0;">MIND-XAI <span style="font-size:0.5em; color:#fff">v4.0</span></h2>
+        <h2 style="margin:0; text-shadow: 0 0 10px #0f0;">MIND-XAI <span style="font-size:0.5em; color:#fff">v5.0</span></h2>
         <p style="color:gray; font-size:0.7em; letter-spacing:2px;">GLOBAL ARCHITECTURE</p>
         
         <br>
-        <a href="MasterController.ps1" download class="btn">? DOWNLOAD ENGINE (v5.0)</a>
+        <a href="MasterController.ps1" download class="btn">? DOWNLOAD ENGINE</a>
         
         <a href="https://github.com/Mind-Xai/mindx-ai/actions/workflows/remote-run.yml" target="_blank" class="btn" style="background:rgba(255,165,0,0.1); color:yellow;">? SEND REMOTE COMMAND</a>
-
-        <div id="console" class="scan-box"></div>
     </div>
 
     <script>
-        // Matrix Rain (Code functionality retained)
+        // Matrix Rain Logic
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -53,5 +50,17 @@
         }
         setInterval(draw, 33);
     </script>
-</body>
+
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6921ac1ecdfad5195f9e5ba4/1jalogm31';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    </body>
 </html>
