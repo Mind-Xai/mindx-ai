@@ -1,37 +1,24 @@
 name: Remote Command Trigger
-
 on:
   workflow_dispatch:
     inputs:
       command:
-        description: 'Command to run (RUN/WAIT)'
+        description: 'Command'
         required: true
         default: 'RUN'
-
 permissions:
   contents: write
-
 jobs:
-  send_command:
+  update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Set Git Config
-        run: |
+      - run: |
           git config user.name "Mind-Xai Robot"
           git config user.email "mindxxx333@gmail.com"
-
-      - name: Update Command File
-        run: echo "${{ github.event.inputs.command }}" > command.txt
-
-      - name: Commit and Push (Smart Check)
-        run: |
-          git add command.txt
+          echo "${{ inputs.command }}" > command.txt
           if [[ -n $(git status -s) ]]; then
-            git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}"
+            git add command.txt
+            git commit -m "Remote Update"
             git push
-            echo "? Command Sent Successfully"
-          else
-            echo "?? No changes needed (Already set)"
           fi
