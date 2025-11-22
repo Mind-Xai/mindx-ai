@@ -8,14 +8,15 @@ on:
         required: true
         default: 'RUN'
 
+permissions:
+  contents: write
+
 jobs:
   send_command:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Set Git Config
         run: |
           git config user.name "Mind-Xai Robot"
