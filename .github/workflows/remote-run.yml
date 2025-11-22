@@ -1,0 +1,34 @@
+name: ?? Remote Command Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Command to run (RUN/WAIT)'
+        required: true
+        default: 'RUN'
+
+permissions:
+  contents: write
+
+jobs:
+  send_command:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Git Config
+        run: |
+          git config user.name "Mind-Xai Robot"
+          git config user.email "mindxxx333@gmail.com"
+
+      - name: Update Command File
+        run: echo "${{ github.event.inputs.command }}" > command.txt
+
+      - name: Commit and Push
+        run: |
+          git add command.txt
+          git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}"
+          git push
