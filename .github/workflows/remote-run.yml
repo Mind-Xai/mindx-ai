@@ -28,5 +28,5 @@ jobs:
       - name: Commit and Push
         run: |
           git add command.txt
-          git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}"
+          git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}" || echo "?? No changes to commit (Already set)"
           git push
