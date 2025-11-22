@@ -1,15 +1,15 @@
 # ---------------------------------------------------------
-# MIND-XAI | MASTER CONTROLLER (v4.0 - Global Eye)
-# Mission: Worldwide Trust & Ethical Automation
+# MIND-XAI | INTELLIGENCE SYSTEM v5.0 (Diagnostics)
+# Status: READY FOR GLOBAL DEPLOYMENT
 # Copyright (C) 2025 Mind-Xai Global 
 # ---------------------------------------------------------
 
 function Show-Header {
     Clear-Host
     Write-Host "=============================================" -ForegroundColor Cyan
-    Write-Host "    MIND-XAI: INTELLIGENCE SYSTEM v4.0     " -ForegroundColor Magenta
+    Write-Host "    MIND-XAI: INTELLIGENCE SYSTEM v5.0     " -ForegroundColor Magenta
     Write-Host "=============================================" -ForegroundColor Cyan
-    Write-Host "   User: $env:USERNAME | Status: GLOBAL LINK " -ForegroundColor DarkGray
+    Write-Host "   User: $env:USERNAME | Status: READY " -ForegroundColor DarkGray
     Write-Host "---------------------------------------------"
 }
 
@@ -38,6 +38,7 @@ function WiFi-Radar {
     Start-Sleep -Seconds 1
     $networks = netsh wlan show networks mode=bssid
     if ($networks) {
+        Write-Host "---------------------------------------------"
         $networks | Select-String "SSID" | ForEach-Object { Write-Host " [+] $_" -ForegroundColor Cyan }
         Write-Host " Scan Complete." -ForegroundColor Yellow
     } else { Write-Host " WiFi Adapter Offline." -ForegroundColor Red }
@@ -46,38 +47,39 @@ function WiFi-Radar {
 function IP-Tracker {
     Write-Host " GLOBAL GEO-TRACKER ACTIVATED..." -ForegroundColor Green
     $targetIP = Read-Host " >> Enter IP Address (Press Enter for MY IP)"
-    
     try {
-        $url = "http://ip-api.com/json/$targetIP"
-        $info = Invoke-RestMethod -Uri $url
-        
-        if ($info.status -eq "fail") {
-            Write-Host " Tracking Failed: Invalid IP" -ForegroundColor Red
-        } else {
-            Write-Host "---------------------------------------------"
-            Write-Host "  TARGET LOCKED " -ForegroundColor Red
-            Write-Host "---------------------------------------------"
-            Write-Host " [+] IP Address : $($info.query)" -ForegroundColor White
-            Write-Host " [+] Country    : $($info.country) ($($info.countryCode))" -ForegroundColor Yellow
-            Write-Host " [+] City       : $($info.city)" -ForegroundColor Yellow
-            Write-Host " [+] ISP        : $($info.isp)" -ForegroundColor Cyan
-            Write-Host " [+] Timezone   : $($info.timezone)" -ForegroundColor DarkGray
-            Write-Host "---------------------------------------------"
-        }
-    } catch {
-        Write-Host " Connection Error. Check Internet." -ForegroundColor Red
-    }
+        $info = Invoke-RestMethod -Uri "http://ip-api.com/json/$targetIP"
+        Write-Host "---------------------------------------------"
+        Write-Host "  TARGET LOCKED " -ForegroundColor Red
+        Write-Host " [+] IP Address : $($info.query)" -ForegroundColor White
+        Write-Host " [+] Country    : $($info.country)" -ForegroundColor Yellow
+        Write-Host " [+] City       : $($info.city)" -ForegroundColor Yellow
+        Write-Host " [+] ISP        : $($info.isp)" -ForegroundColor Cyan
+    } catch { Write-Host " Error. Check Internet." -ForegroundColor Red }
+    Pause
+}
+
+function System-Report {
+    Write-Host " GENERATING SYSTEM DIAGNOSTICS..." -ForegroundColor Magenta
+    Write-Host "---------------------------------------------"
+    Write-Host " [+] OS Version: $([System.Environment]::OSVersion.VersionString)" -ForegroundColor White
+    Write-Host " [+] Processor : $(Get-CimInstance -ClassName Win32_Processor | Select-Object -ExpandProperty Name)" -ForegroundColor White
+    $mem = Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum
+    $totalGB = [math]::Round($mem.Sum / 1GB, 2)
+    Write-Host " [+] Total RAM : $($totalGB) GB" -ForegroundColor White
+    Write-Host " [+] User Name : $($env:USERNAME)" -ForegroundColor White
+    Write-Host "---------------------------------------------"
     Pause
 }
 
 # --- MAIN LOOP ---
 do {
     Show-Header
-    Write-Host "[1]  Activate 50x Speed Mode"
+    Write-Host "[1]  Activate 50x Speed Mode (Clean & Power)"
     Write-Host "[2]  Fix Internet & Ping"
-    Write-Host "[3]  Auto-Repair Windows"
-    Write-Host "[4]  WiFi Radar (Scan Networks)"
-    Write-Host "[5]  IP Geo-Tracker (Locate Target)"
+    Write-Host "[3]  WiFi Radar (Scan Networks)"
+    Write-Host "[4]  IP Geo-Tracker (Locate Target)"
+    Write-Host "[5]  SYSTEM DIAGNOSTICS (System Report)"
     Write-Host "[Q]  Exit"
     Write-Host "---------------------------------------------"
     
@@ -86,9 +88,9 @@ do {
     switch ($userChoice) {
         '1' { Ultimate-Performance; Deep-Clean; Pause }
         '2' { Internet-Boost; Pause }
-        '3' { Write-Host " Scanning System Health..." -ForegroundColor Yellow; Start-Sleep -Seconds 2; Write-Host " System Integrity: 100%" -ForegroundColor Green; Pause }
-        '4' { WiFi-Radar; Pause }
-        '5' { IP-Tracker }
+        '3' { WiFi-Radar; Pause }
+        '4' { IP-Tracker }
+        '5' { System-Report }
         'Q' { Write-Host "Mind-Xai Signing Off..." -ForegroundColor Red; break }
         Default { Write-Host " Invalid Command" -ForegroundColor Red; Start-Sleep -Seconds 1 }
     }

@@ -1,25 +1,39 @@
 # ---------------------------------------------------------
-# MIND-XAI | REMOTE LISTENER (Cloud Link)
-# Waiting for Global Command...
+# MIND-XAI | REMOTE LISTENER (Smart Sync)
+# Status: AUTO-RESET + SYNC FIX
 # ---------------------------------------------------------
 
-$commandURL = "https://raw.githubusercontent.com/Mind-Xai/mindx-ai/main/command.txt"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Write-Host " LISTENING FOR CLOUD COMMANDS..." -ForegroundColor Cyan
-Write-Host "   Target: $commandURL" -ForegroundColor DarkGray
+Write-Host " SMART ROBOTIC LINK ESTABLISHED..." -ForegroundColor Cyan
+Write-Host "   Waiting for signal..." -ForegroundColor Gray
+Write-Host "-----------------------------------"
 
-while ($true) {
+while($true) {
     try {
-        # 1. Cloud se file padho (Bina cache ke)
-        $action = Invoke-RestMethod -Uri "$commandURL?t=$(Get-Date -Format ss)" -ErrorAction SilentlyContinue
-        
-        # 2. Agar "RUN" likha ho, toh Attack karo
-        if ($action -match "RUN") {
-            Write-Host " COMMAND RECEIVED: EXECUTING PROTOCOL..." -ForegroundColor Green
-            # MasterController chalao (Option 1 - Auto Mode)
-            & powershell -ExecutionPolicy Bypass -File "MasterController.ps1"
+        $web = New-Object Net.WebClient
+        $random = Get-Random
+        $url = "https://raw.githubusercontent.com/Mind-Xai/mindx-ai/main/command.txt?t=$random"
+        $status = $web.DownloadString($url).Trim()
+
+        if ($status -eq "RUN") {
+            Write-Host "[$(Get-Date -Format 'HH:mm:ss')]  COMMAND RECEIVED! Executing..." -ForegroundColor Green
             
-            Write-Host " Execution Complete. Waiting for next order..." -ForegroundColor Yellow
+            # 1. Script Chalao
+            Start-Process "Start-MindXai.bat"
+            
+            # 2. SYNC FIX: Pehle GitHub se update lo
+            Write-Host "    Syncing with Cloud (Pulling)..." -ForegroundColor Cyan
+            git pull origin main
+            
+            # 3. ROBOTIC ACTION: Ab wapis "WAIT" kar do
+            Write-Host "    Resetting to WAIT..." -ForegroundColor Yellow
+            Set-Content -Path "command.txt" -Value "WAIT"
+            git add command.txt
+            git commit -m "Auto-Robotic Reset"
+            git push origin main
+            
+            Write-Host "    Reset Complete. System Ready." -ForegroundColor Green
             Start-Sleep -Seconds 10
         }
         else {
@@ -30,6 +44,5 @@ while ($true) {
         Write-Host "!" -NoNewline -ForegroundColor Red
     }
     
-    # 3. Har 5 second baad check karo
     Start-Sleep -Seconds 5
 }
