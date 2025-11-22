@@ -25,8 +25,13 @@ jobs:
       - name: Update Command File
         run: echo "${{ github.event.inputs.command }}" > command.txt
 
-      - name: Commit and Push
+      - name: Commit and Push (Smart Check)
         run: |
           git add command.txt
-          git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}" || echo "?? No changes to commit (Already set)"
-          git push
+          if [[ -n $(git status -s) ]]; then
+            git commit -m "Remote Trigger: Set command to ${{ github.event.inputs.command }}"
+            git push
+            echo "? Command Sent Successfully"
+          else
+            echo "?? No changes needed (Already set)"
+          fi
