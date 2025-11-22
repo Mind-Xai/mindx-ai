@@ -17,8 +17,12 @@ jobs:
           git config user.name "Mind-Xai Robot"
           git config user.email "mindxxx333@gmail.com"
           echo "${{ inputs.command }}" > command.txt
+          
+          # Sirf tab commit karo agar change hua ho
           if [[ -n $(git status -s) ]]; then
             git add command.txt
-            git commit -m "Remote Update"
+            git commit -m "Remote Update: ${{ inputs.command }}"
             git push
+          else
+            echo " No changes needed (Already set)"
           fi
