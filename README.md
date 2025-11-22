@@ -30,3 +30,19 @@ We are building **Trust**.
 ---
 **Author:** Mind-Xai (Founder & Architect)
 *Building the future from Dubai to the World.*
+
+
+
+## ?? Services & Partnership
+Mind-Xai offers highly specialized **PowerShell Automation** and **Secure Deployment** services.
+
+### Hire the Architect:
+If your company needs:
+* **Custom Automation Scripts** (Like this Sentinel/Geo-Tracker).
+* **Secure Cloud Integration (GitHub/Azure/GCP)**
+* **Remote System Diagnostics**
+
+Please contact us via **GitHub Profile** for consultation rates.
+
+## ?? Support Development
+If Mind-Xai has helped you achieve 50x speed, please consider sponsoring our mission!
