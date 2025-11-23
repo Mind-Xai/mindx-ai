@@ -1,2 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIND-XAI | GLOBAL COMMAND CENTER</title>
+    <style>
+        body { margin: 0; overflow: hidden; background: black; color: #0f0; font-family: 'Courier New', monospace; }
+        canvas { display: block; position: absolute; top: 0; left: 0; z-index: -1; }
+        .content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 90%; }
+        .logo { width: 100px; border-radius: 50%; box-shadow: 0 0 30px #0f0; margin-bottom: 20px; border: 2px solid #0f0; }
+        h2 { text-shadow: 0 0 10px #0f0; }
+        .stats { margin-top: 20px; border: 1px solid #0f0; padding: 10px; background: rgba(0, 20, 0, 0.8); box-shadow: 0 0 10px #0f0; max-width: 350px; margin: 20px auto; }
+        .stat-item { text-align: left; margin: 5px 0; }
+        .btn { background: rgba(0, 255, 0, 0.1); color: #0f0; border: 1px solid #0f0; padding: 15px 20px; display: block; margin: 15px auto; max-width: 300px; }
+        .btn-remote { border-color: yellow; color: yellow; box-shadow: 0 0 10px yellow; }
+        .btn-remote:hover { background: yellow; color: black; box-shadow: 0 0 20px yellow; }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <div class="content">
+        <img src="logo.jpg" class="logo" alt="Mind-Xai">
+        <h2>MIND-XAI <span style="font-size:0.5em; color:#fff">v6.0</span></h2>
+        <p>GLOBAL COMMAND CENTER</p>
+        
+        <div class="stats">
+            <div class="stat-item">CPU: <span id="cpu">--</span>%</div>
+            <div class="stat-item">RAM FREE: <span id="ram_free">--</span> GB</div>
+            <div class="stat-item">RAM TOTAL: <span id="ram_total">--</span> GB</div>
+            <div class="stat-item" style="color:yellow;">LAST REPORT: <span id="timestamp">--</span></div>
+        </div>
+        
+        <br>
+        <a href="MasterController.ps1" download class="btn">? DOWNLOAD ENGINE</a>
+        <a href="https://github.com/Mind-Xai/mindx-ai/actions/workflows/remote-run.yml" target="_blank" class="btn btn-remote">? SEND REMOTE COMMAND</a>
+    </div>
 
+    <script>
+        // Matrix Rain Logic
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const chars = '01XYZMINDXAI';
+        const drops = Array(Math.floor(canvas.width/14)).fill(1);
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            for(let i = 0; i < drops.length; i++) {
+                ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*14, drops[i]*14);
+                if(drops[i]*14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 33);
+        
+        // API Fetch Logic (Updated with your Link)
+        function updateStats() {
+            const API_URL = 'https://oilless-genevive-thirstier.ngrok-free.dev/stats';
 
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cpu').textContent = data.cpu_usage;
+                    document.getElementById('ram_free').textContent = data.ram_free;
+                    document.getElementById('ram_total').textContent = data.ram_total;
+                    document.getElementById('timestamp').textContent = data.timestamp;
+                })
+                .catch(error => {
+                    document.getElementById('cpu').textContent = 'OFFLINE';
+                    document.getElementById('timestamp').textContent = 'CHECK SENTINEL';
+                });
+        }
+        updateStats(); 
+        setInterval(updateStats, 5000); 
+    </script>
+    
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/6921ac1ecdfad5195f9e5ba4/1jalogm31';
+    s1.charset='UTF-8';
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+</body>
+</html>
