@@ -1,0 +1,5 @@
+﻿2025-11-23 04:53:35 - --- SENTINEL SERVICE STARTED ---
+2025-11-23 04:53:35 - API Listening on Port 8088
+2025-11-23 05:19:31 - --- SENTINEL SERVICE STARTED ---
+2025-11-23 05:19:31 - CRITICAL ERROR: Exception calling "Start" with "0" argument(s): "Failed to listen on prefix 'http://127.0.0.1:8088/' because it conflicts with an existing registration on the machine."
+2025-11-23 05:19:31 - Sentinel Stopped.
