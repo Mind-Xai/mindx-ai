@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIND-XAI | GLOBAL COMMAND CENTER</title>
+    <title>MIND-XAI | ELITE v7.0</title>
     <style>
         body { margin: 0; overflow: hidden; background: black; color: #0f0; font-family: 'Courier New', monospace; }
         canvas { display: block; position: absolute; top: 0; left: 0; z-index: -1; }
         .content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 90%; }
-        .logo { width: 100px; border-radius: 50%; box-shadow: 0 0 30px #0f0; margin-bottom: 20px; border: 2px solid #0f0; }
-        h2 { text-shadow: 0 0 10px #0f0; }
-        .stats { margin-top: 20px; border: 1px solid #0f0; padding: 10px; background: rgba(0, 20, 0, 0.8); box-shadow: 0 0 10px #0f0; max-width: 350px; margin: 20px auto; }
-        .stat-item { text-align: left; margin: 5px 0; }
-        .btn { background: rgba(0, 255, 0, 0.1); color: #0f0; border: 1px solid #0f0; padding: 15px 20px; display: block; margin: 15px auto; max-width: 300px; }
-        .btn-remote { border-color: yellow; color: yellow; box-shadow: 0 0 10px yellow; }
-        .btn-remote:hover { background: yellow; color: black; box-shadow: 0 0 20px yellow; }
+        .logo { width: 110px; border-radius: 50%; box-shadow: 0 0 40px #0f0; margin-bottom: 20px; border: 2px solid #fff; animation: pulse 2s infinite; }
+        h2 { text-shadow: 0 0 15px #0f0; font-size: 2em; margin: 0; }
+        .tagline { color: #0ff; font-size: 0.8em; letter-spacing: 3px; margin-bottom: 20px; font-weight: bold; }
+        
+        .stats { margin-top: 20px; border: 1px solid #0f0; padding: 15px; background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 20px #0f0; max-width: 350px; margin: 0 auto; border-radius: 10px; }
+        .stat-item { text-align: left; margin: 8px 0; font-size: 1.1em; border-bottom: 1px dashed #333; padding-bottom: 5px; }
+        
+        .btn { background: rgba(0, 255, 0, 0.1); color: #0f0; border: 1px solid #0f0; padding: 15px 20px; display: block; margin: 15px auto; max-width: 300px; transition: 0.3s; }
+        .btn:hover { background: #0f0; color: black; box-shadow: 0 0 25px #0f0; cursor: pointer; }
+        .btn-remote { border-color: #ff0055; color: #ff0055; box-shadow: 0 0 10px #ff0055; }
+        .btn-remote:hover { background: #ff0055; color: white; box-shadow: 0 0 30px #ff0055; }
+
+        @keyframes pulse { 0% { box-shadow: 0 0 20px #0f0; } 50% { box-shadow: 0 0 50px #0ff; } 100% { box-shadow: 0 0 20px #0f0; } }
     </style>
 </head>
 <body>
@@ -22,19 +28,19 @@
     
     <div class="content">
         <img src="logo.jpg" class="logo" alt="Mind-Xai">
-        <h2>MIND-XAI <span style="font-size:0.5em; color:#fff">v6.0</span></h2>
-        <p>GLOBAL COMMAND CENTER</p>
+        <h2>MIND-XAI <span style="font-size:0.5em; color:#fff">v7.0</span></h2>
+        <p class="tagline">ELITE NETWORK MONITOR</p>
         
         <div class="stats">
-            <div class="stat-item">CPU: <span id="cpu">--</span>%</div>
-            <div class="stat-item">RAM FREE: <span id="ram_free">--</span> GB</div>
-            <div class="stat-item">RAM TOTAL: <span id="ram_total">--</span> GB</div>
-            <div class="stat-item" style="color:yellow;">LAST REPORT: <span id="timestamp">--</span></div>
+            <div class="stat-item"> CPU LOAD: <span id="cpu" style="color:#fff">--</span>%</div>
+            <div class="stat-item"> RAM FREE: <span id="ram_free" style="color:#fff">--</span> GB</div>
+            <div class="stat-item"> RAM TOTAL: <span id="ram_total" style="color:#fff">--</span> GB</div>
+            <div class="stat-item" style="font-size:0.7em; color:gray; margin-top:10px;">STATUS: <span id="timestamp" style="color:#0f0">SCANNING...</span></div>
         </div>
         
         <br>
-        <a href="MasterController.ps1" download class="btn">? DOWNLOAD ENGINE</a>
-        <a href="https://github.com/Mind-Xai/mindx-ai/actions/workflows/remote-run.yml" target="_blank" class="btn btn-remote">? SEND REMOTE COMMAND</a>
+        <a href="MasterController.ps1" download class="btn"> DOWNLOAD ENGINE v7.0</a>
+        <a href="https://github.com/Mind-Xai/mindx-ai/actions/workflows/remote-run.yml" target="_blank" class="btn btn-remote"> FIRE REMOTE TRIGGER</a>
     </div>
 
     <script>
@@ -57,9 +63,10 @@
         }
         setInterval(draw, 33);
         
-        // API Fetch Logic (Updated with your Link)
+        // API Fetch Logic
         function updateStats() {
-            const API_URL = '/stats';
+            // Naya Link Yahan Auto-Inject Hoga ya Purana Use Hoga
+            const API_URL = 'https://oilless-genevive-thirstier.ngrok-free.dev/stats';
 
             fetch(API_URL)
                 .then(response => response.json())
@@ -67,11 +74,10 @@
                     document.getElementById('cpu').textContent = data.cpu_usage;
                     document.getElementById('ram_free').textContent = data.ram_free;
                     document.getElementById('ram_total').textContent = data.ram_total;
-                    document.getElementById('timestamp').textContent = data.timestamp;
+                    document.getElementById('timestamp').textContent = "LIVE: " + data.timestamp;
                 })
                 .catch(error => {
-                    document.getElementById('cpu').textContent = 'OFFLINE';
-                    document.getElementById('timestamp').textContent = 'CHECK SENTINEL';
+                    document.getElementById('timestamp').textContent = 'CONNECTING TO SENTINEL...';
                 });
         }
         updateStats(); 
@@ -90,5 +96,3 @@
     </script>
 </body>
 </html>
-
-
